@@ -1,1 +1,10 @@
 c:\users\szymon\documents\visual studio 2013\Projects\AntGraph\AntGraph\bin\Debug\AntGraph.exe.config
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\bin\Debug\AntGraph.exe
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\bin\Debug\AntGraph.pdb
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.csprojResolveAssemblyReference.cache
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.Form1.resources
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.Properties.Resources.resources
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.View.View.resources
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.csproj.GenerateResource.Cache
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.exe
+C:\Users\Szymon\Documents\Visual Studio 2013\Projects\AntGraph\AntGraph\obj\Debug\AntGraph.pdb
