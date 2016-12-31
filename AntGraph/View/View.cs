@@ -37,6 +37,7 @@ namespace AntGraph.View
                 {
                     drawBacground(g);
                     drawGraph(g);
+                    drawEdges(g);
                     
                 }
             }
@@ -49,7 +50,7 @@ namespace AntGraph.View
             List<Point> pointsToDraw = graph.getVertices();
             foreach (Point p in pointsToDraw)
             {
-                Rectangle area = new Rectangle(p.X, p.Y, 10, 10);
+                Rectangle area = new Rectangle(p.X-5, p.Y-5, 10, 10);
                 g.FillEllipse(brush, area);
             }
         }
@@ -61,6 +62,17 @@ namespace AntGraph.View
             g.FillRectangle(brush, area);
         }
 
+        private void drawEdges(Graphics g)
+        {
+            
+            Dictionary<Edge, double> egdes = graph.getEdges();
+            foreach (KeyValuePair<Edge, double> edge in egdes)
+            {
+                Pen pen = new Pen(Color.Lime,(float)edge.Value);
+                g.DrawLine(pen, edge.Key.p1, edge.Key.p2);
+            }
+        }
+        
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (!readyToDraw)
@@ -77,7 +89,7 @@ namespace AntGraph.View
         {
             int x = pictureBox1.PointToClient(MousePosition).X;
             int y = pictureBox1.PointToClient(MousePosition).Y;
-            Point mousePoint = new Point(x-5,y-5);
+            Point mousePoint = new Point(x,y);
             graph.addVertex(mousePoint);
         }
 
