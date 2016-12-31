@@ -16,6 +16,7 @@ namespace AntGraph.View
         Bitmap bitmap;
         bool readyToDraw;
         int i = 0;
+        Graph graph;
 
         public View()
         {
@@ -23,10 +24,10 @@ namespace AntGraph.View
             InitializeComponent();
             canvas = pictureBox1.CreateGraphics();
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            graph = new Graph();
             readyToDraw = true;
             timer1.Enabled = true;
         }
-
 
         private void drawScreen()
         {
@@ -35,18 +36,22 @@ namespace AntGraph.View
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     drawBacground(g);
-                    drawLine(g);
+                    drawGraph(g);
                     
                 }
             }
         }
 
-        private void drawLine(Graphics g)
+        private void drawGraph(Graphics g)
         {
-            Pen pen = new Pen(Color.LimeGreen);
-            Point p1 = new Point(40+i,50+i);
-            Point p2 = new Point(45,60);
-            g.DrawLine(pen, p1, p2);
+            Brush brush = new SolidBrush(Color.Lime);
+            
+            List<Point> pointsToDraw = graph.getVertices();
+            foreach (Point p in pointsToDraw)
+            {
+                Rectangle area = new Rectangle(p.X, p.Y, 10, 10);
+                g.FillEllipse(brush, area);
+            }
         }
 
         private void drawBacground(Graphics g)
@@ -68,6 +73,18 @@ namespace AntGraph.View
             i++;
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            int x = pictureBox1.PointToClient(MousePosition).X;
+            int y = pictureBox1.PointToClient(MousePosition).Y;
+            Point mousePoint = new Point(x-5,y-5);
+            graph.addVertex(mousePoint);
+        }
+
+        private void pictureBox1_Resize(object sender, EventArgs e)
+        {
+            bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+        }
 
 
     }
