@@ -34,14 +34,28 @@ namespace AntGraph
             return edges;
         }
 
-        public Dictionary<Edge, double> getEdgesFromVertex(Point vertex)
+        public Dictionary<Edge, double> getEdgesFromVertex(Point startVertex)
         {
             Dictionary<Edge, double> edgesFromVertex = new Dictionary<Edge, double>();
-            foreach (KeyValuePair<Edge, double>  edge in edges)
+            foreach (Point vertex in vertices)
             {
-                if (edge.Key.p1 == vertex)
+                if (startVertex != vertex)
                 {
-                    edgesFromVertex.Add(edge.Key,edge.Value);
+                    Edge edge;
+                    edge.p1 = startVertex;
+                    edge.p2 = vertex;
+                    if (edges.ContainsKey(edge))
+                    {
+                        edgesFromVertex.Add(edge, edges[edge]);
+                    }
+                    else if (edges.ContainsKey(edge.reverse()))
+                    {
+                        edgesFromVertex.Add(edge, edges[edge.reverse()]);
+                    }
+                    else
+                    {
+                        edgesFromVertex.Add(edge, 0);
+                    }
                 }
             }
             return edgesFromVertex;
@@ -49,9 +63,14 @@ namespace AntGraph
 
         public void addEdge(Edge edge, double value)
         {
+            
             if (edges.ContainsKey(edge))
             {
                 edges[edge] += value;
+            }
+            else if (edges.ContainsKey(edge.reverse()))
+            {
+                edges[edge.reverse()] += value;
             }
             else
             {

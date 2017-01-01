@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace AntGraph
 {
@@ -21,6 +22,21 @@ namespace AntGraph
             }
         }
 
+        public void moveAnts()
+        {
+            foreach (Ant ant in ants)
+            {
+                
+            }
+        }
+
+        public void moveAnt(Ant ant)
+        {
+            Point antLocation = ant.getLocation();
+            Dictionary<Edge, double> edges = graph.getEdgesFromVertex(antLocation);
+            Point antDestination = ant.choosePoint(edges);
+
+        }
 
 
     }

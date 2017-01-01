@@ -17,6 +17,7 @@ namespace AntGraph.View
         bool readyToDraw;
         int i = 0;
         Graph graph;
+        AntManager antManager;
 
         public View()
         {
@@ -64,7 +65,6 @@ namespace AntGraph.View
 
         private void drawEdges(Graphics g)
         {
-            
             Dictionary<Edge, double> egdes = graph.getEdges();
             foreach (KeyValuePair<Edge, double> edge in egdes)
             {
@@ -72,7 +72,12 @@ namespace AntGraph.View
                 g.DrawLine(pen, edge.Key.p1, edge.Key.p2);
             }
         }
-        
+
+        public void startAntSimulation(int antNumber)
+        {
+            antManager = new AntManager(graph, antNumber);
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (!readyToDraw)
@@ -97,7 +102,6 @@ namespace AntGraph.View
         {
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
         }
-
 
     }
 }
