@@ -22,13 +22,6 @@ namespace AntGraph
         public void addVertex(Point p)
         {
             vertices.Add(p);
-            if (vertices.Count > 3)
-            {
-                Edge edge;
-                edge.p1 = vertices[0];
-                edge.p2 = vertices[vertices.Count - 1];
-                edges.Add(edge, 0.3);
-            }
         }
         
         public List<Point> getVertices()
@@ -40,5 +33,31 @@ namespace AntGraph
         {
             return edges;
         }
+
+        public Dictionary<Edge, double> getEdgesFromVertex(Point vertex)
+        {
+            Dictionary<Edge, double> edgesFromVertex = new Dictionary<Edge, double>();
+            foreach (KeyValuePair<Edge, double>  edge in edges)
+            {
+                if (edge.Key.p1 == vertex)
+                {
+                    edgesFromVertex.Add(edge.Key,edge.Value);
+                }
+            }
+            return edgesFromVertex;
+        }
+
+        public void addEdge(Edge edge, double value)
+        {
+            if (edges.ContainsKey(edge))
+            {
+                edges[edge] += value;
+            }
+            else
+            {
+                edges.Add(edge, value);
+            }
+        }
+
     }
 }
