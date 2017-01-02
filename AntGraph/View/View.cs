@@ -46,12 +46,25 @@ namespace AntGraph.View
 
         private void drawGraph(Graphics g)
         {
-            Brush brush = new SolidBrush(Color.Lime);
-            
+            Brush brush;
             List<Point> pointsToDraw = graph.getVertices();
-            foreach (Point p in pointsToDraw)
+            for (int i = 0; i < pointsToDraw.Count; i++ )
             {
-                Rectangle area = new Rectangle(p.X-5, p.Y-5, 10, 10);
+                if (i == 0)
+                {
+                    brush = new SolidBrush(Color.AliceBlue);
+                }
+                else if (i == pointsToDraw.Count - 1)
+                {
+                    brush = new SolidBrush(Color.AliceBlue);
+                }
+                else
+                {
+                    brush = new SolidBrush(Color.Lime);
+                }
+
+                Point p = pointsToDraw[i];
+                Rectangle area = new Rectangle(p.X - 5, p.Y - 5, 10, 10);
                 g.FillEllipse(brush, area);
             }
         }

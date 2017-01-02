@@ -41,7 +41,7 @@ namespace AntGraph
             Edge edge;
             edge.p1 = antLocation;
             edge.p2 = antDestination;
-            graph.addEdge(edge, 0.8);
+            graph.addEdge(edge, 1.2);
         }
         
         public Graph getGraph()

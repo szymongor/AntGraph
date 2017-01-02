@@ -21,6 +21,10 @@ namespace AntGraph
 
         public void addVertex(Point p)
         {
+            if (vertices.Contains(p))
+            {
+                return;
+            }
             vertices.Add(p);
         }
         

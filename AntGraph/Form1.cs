@@ -19,7 +19,6 @@ namespace AntGraph
 
         private void button1_Click(object sender, EventArgs e)
         {
-            view1.startAntSimulation(3);
         }
     }
 }
