@@ -24,19 +24,31 @@ namespace AntGraph
         public Point choosePoint(Dictionary<Edge, double> edges)
         {
             Point choosenPoint = new Point(2, 3);
+            double pheromoneAmount = 0;
             foreach (KeyValuePair<Edge,double> edge in edges)
             {
-                if (edge.Key.p2 != currentLocation)
+                pheromoneAmount += edge.Value + 1;     
+            }
+
+            Random random = new Random();
+
+            double rand = random.NextDouble() * pheromoneAmount;
+            pheromoneAmount = 0;
+            foreach (KeyValuePair<Edge, double> edge in edges)
+            {
+                pheromoneAmount += edge.Value +1;
+                if (pheromoneAmount > rand)
                 {
                     return edge.Key.p2;
                 }
-                else
-                {
-                    return edge.Key.p1;
-                }
-                
             }
+
             return choosenPoint;
+        }
+
+        public void moveAnt(Point point)
+        {
+            currentLocation = point;
         }
     }
 }

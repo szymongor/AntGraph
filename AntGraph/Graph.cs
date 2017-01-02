@@ -78,5 +78,14 @@ namespace AntGraph
             }
         }
 
+        public void pheromoneDecay()
+        {
+            Dictionary<Edge, double> newPheromones = new Dictionary<Edge, double>();
+            foreach (KeyValuePair<Edge, double> edge in edges)
+            {
+                newPheromones.Add(edge.Key, edge.Value * 0.9);
+            }
+            edges = newPheromones;
+        }
     }
 }

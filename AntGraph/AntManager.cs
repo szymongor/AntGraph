@@ -19,25 +19,35 @@ namespace AntGraph
             for (int i = 0; i < antNumber; i++)
             {
                 Ant ant = new Ant(graph.getVertices()[0]);
+                ants.Add(ant);
             }
         }
 
         public void moveAnts()
         {
+            graph.pheromoneDecay();
             foreach (Ant ant in ants)
             {
-                
+                moveAnt(ant);
             }
         }
 
-        public void moveAnt(Ant ant)
+        private void moveAnt(Ant ant)
         {
             Point antLocation = ant.getLocation();
             Dictionary<Edge, double> edges = graph.getEdgesFromVertex(antLocation);
             Point antDestination = ant.choosePoint(edges);
-
+            ant.moveAnt(antDestination);
+            Edge edge;
+            edge.p1 = antLocation;
+            edge.p2 = antDestination;
+            graph.addEdge(edge, 0.8);
         }
-
+        
+        public Graph getGraph()
+        {
+            return graph;
+        }
 
     }
 }

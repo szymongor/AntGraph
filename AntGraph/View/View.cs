@@ -66,8 +66,17 @@ namespace AntGraph.View
         private void drawEdges(Graphics g)
         {
             Dictionary<Edge, double> egdes = graph.getEdges();
+            if (antManager != null)
+            {
+                egdes = antManager.getGraph().getEdges();
+            }
+            
             foreach (KeyValuePair<Edge, double> edge in egdes)
             {
+                if ((float)edge.Value < 1)
+                {
+                    continue;
+                }
                 Pen pen = new Pen(Color.Lime,(float)edge.Value);
                 g.DrawLine(pen, edge.Key.p1, edge.Key.p2);
             }
@@ -83,6 +92,10 @@ namespace AntGraph.View
             if (!readyToDraw)
             {
                 return;
+            }
+            if (antManager != null)
+            {
+                antManager.moveAnts();
             }
             pictureBox1.Image = bitmap;
             pictureBox1.Update();
