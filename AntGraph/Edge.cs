@@ -20,5 +20,12 @@ namespace AntGraph
 
             return edge;
         }
+
+        public double length()
+        {
+            double length;
+            length = Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+            return length;
+        }
     }
 }

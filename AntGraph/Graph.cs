@@ -70,24 +70,33 @@ namespace AntGraph
             
             if (edges.ContainsKey(edge))
             {
-                edges[edge] += value;
+                edges[edge] += value * (1 / edge.length());
             }
             else if (edges.ContainsKey(edge.reverse()))
             {
-                edges[edge.reverse()] += value;
+                edges[edge.reverse()] += value *(1/edge.length());
             }
             else
             {
-                edges.Add(edge, value);
+                edges.Add(edge, value * (1/edge.length()));
             }
+
         }
 
-        public void pheromoneDecay()
+        public static double verticesDistance(Point p1, Point p2)
+        {
+            double dist = Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+            return dist;
+        }
+
+        public void pheromoneDecay(double decayCoef)
         {
             Dictionary<Edge, double> newPheromones = new Dictionary<Edge, double>();
             foreach (KeyValuePair<Edge, double> edge in edges)
             {
-                newPheromones.Add(edge.Key, edge.Value * 0.9);
+                double newPheromone = edge.Value - decayCoef;
+                if (newPheromone < 0) newPheromone = 0;
+                newPheromones.Add(edge.Key, newPheromone);
             }
             edges = newPheromones;
         }

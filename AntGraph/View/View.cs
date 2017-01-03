@@ -37,9 +37,8 @@ namespace AntGraph.View
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     drawBacground(g);
-                    drawGraph(g);
                     drawEdges(g);
-                    
+                    drawGraph(g);    
                 }
             }
         }
@@ -86,11 +85,11 @@ namespace AntGraph.View
             
             foreach (KeyValuePair<Edge, double> edge in egdes)
             {
-                if ((float)edge.Value < 1)
+                if ((float)edge.Value < 0.5)
                 {
                     continue;
                 }
-                Pen pen = new Pen(Color.Lime,(float)edge.Value);
+                Pen pen = new Pen(Color.Lime, (float)Math.Log10(edge.Value)*2);
                 g.DrawLine(pen, edge.Key.p1, edge.Key.p2);
             }
         }
@@ -98,6 +97,18 @@ namespace AntGraph.View
         public void startAntSimulation(int antNumber)
         {
             antManager = new AntManager(graph, antNumber);
+        }
+
+        public void setPheromoneDecay(double coef)
+        {
+            if(antManager != null)
+            antManager.setDecay(coef);
+        }
+
+        public void setPheromoneIncrement(double coef)
+        {
+            if (antManager != null)
+                antManager.setIncrement(coef);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
