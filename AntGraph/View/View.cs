@@ -94,9 +94,49 @@ namespace AntGraph.View
             }
         }
 
+        private void drawSolution(Graphics g)
+        {
+            List<Point> vertices = graph.getVertices();
+            int graphSize = graph.getVertices().Count;
+            Point currentPoint = vertices[0];
+            int i = 0;
+            while (i < graphSize)
+            {
+                i++;
+                Dictionary<Edge, double> edges = graph.getEdgesFromVertex(currentPoint);
+                double maxPheromone = 0;
+                Point maxDestPoint = currentPoint;
+                foreach (KeyValuePair<Edge, double> edge in edges)
+                {
+                    if (edge.Value > maxPheromone && vertices.Contains(edge.Key.p2))
+                    {
+                        maxPheromone = edge.Value;
+                        maxDestPoint = edge.Key.p2;
+                    }
+                }
+                Pen pen = new Pen(Color.Red, (float)Math.Log10(maxPheromone)*2);
+                g.DrawLine(pen, currentPoint, maxDestPoint);
+                vertices.Remove(currentPoint);
+                currentPoint = maxDestPoint;
+
+            }
+
+        }
+
         public void startAntSimulation(int antNumber)
         {
             antManager = new AntManager(graph, antNumber);
+            readyToDraw = true;
+        }
+
+        public void stopAntSimulation()
+        {
+            //antManager = null;
+            readyToDraw = false;
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                drawSolution(g);
+            }
         }
 
         public void setPheromoneDecay(double coef)
@@ -115,7 +155,7 @@ namespace AntGraph.View
         {
             if (!readyToDraw)
             {
-                return;
+                //return;
             }
             if (antManager != null)
             {

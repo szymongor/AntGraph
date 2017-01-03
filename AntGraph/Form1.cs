@@ -15,14 +15,25 @@ namespace AntGraph
         public Form1()
         {
             InitializeComponent();
+            numericUpDown2.Value = 0.2M;
+            numericUpDown3.Value = 400;
             numericUpDown2.Increment = 0.001M;
-            numericUpDown3.Increment = 0.01M;
-            numericUpDown2.Value = 0.750M;
+            numericUpDown3.Increment = 1M;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            view1.startAntSimulation((int)numericUpDown1.Value);
+            if (button1.Text == "Start")
+            {
+                view1.startAntSimulation((int)numericUpDown1.Value);
+                button1.Text = "Stop";
+            }
+            else
+            {
+                view1.stopAntSimulation();
+                button1.Text = "Start";
+            }
+            
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)

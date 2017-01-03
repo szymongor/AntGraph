@@ -11,7 +11,7 @@ namespace AntGraph
     {
         Graph graph;
         List<Ant> ants;
-        double pheromoneDecay = 1;
+        double pheromoneDecay = 35;
         double pheromoneIncrement = 150;
 
         public AntManager(Graph graph, int antNumber)
