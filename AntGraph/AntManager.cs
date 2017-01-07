@@ -13,9 +13,11 @@ namespace AntGraph
         List<Ant> ants;
         double pheromoneDecay = 35;
         double pheromoneIncrement = 150;
+        StatisticsManager statisticManager;
 
-        public AntManager(Graph graph, int antNumber)
+        public AntManager(Graph graph, int antNumber, StatisticsManager statisticManager)
         {
+            this.statisticManager = statisticManager;
             pheromoneDecay = 0.7;
             this.graph = graph;
             ants = new List<Ant>();
@@ -23,7 +25,7 @@ namespace AntGraph
             {
                 Random rand = new Random((int)DateTime.Now.Ticks);
                 int randInt = (int)(rand.NextDouble() * (graph.getVertices().Count));
-                Ant ant = new Ant(graph.getVertices()[randInt]);
+                Ant ant = new Ant(graph.getVertices()[randInt], statisticManager);
                 ants.Add(ant);
             }
         }

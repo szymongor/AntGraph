@@ -18,6 +18,7 @@ namespace AntGraph.View
         int i = 0;
         Graph graph;
         AntManager antManager;
+        StatisticsManager statisticManager;
 
         public View()
         {
@@ -28,6 +29,7 @@ namespace AntGraph.View
             graph = new Graph();
             readyToDraw = true;
             timer1.Enabled = true;
+            statisticManager = new StatisticsManager();
         }
 
         private void drawScreen()
@@ -38,7 +40,8 @@ namespace AntGraph.View
                 {
                     drawBacground(g);
                     drawEdges(g);
-                    drawGraph(g);    
+                    drawGraph(g);
+                    drawAverageScore(g);
                 }
             }
         }
@@ -73,6 +76,15 @@ namespace AntGraph.View
             Brush brush = new SolidBrush(Color.Black);
             Rectangle area = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
             g.FillRectangle(brush, area);
+        }
+
+        private void drawAverageScore(Graphics g)
+        {
+            Brush brush = new SolidBrush(Color.Lime);
+            String s = "Average score: "+((int)statisticManager.averagePathLength()).ToString();
+            Font drawFont = new Font("Arial", 8);
+            PointF drawPoint = new PointF(30, 30);
+            g.DrawString(s, drawFont, brush, drawPoint);
         }
 
         private void drawEdges(Graphics g)
@@ -125,7 +137,7 @@ namespace AntGraph.View
 
         public void startAntSimulation(int antNumber)
         {
-            antManager = new AntManager(graph, antNumber);
+            antManager = new AntManager(graph, antNumber, statisticManager);
             readyToDraw = true;
         }
 

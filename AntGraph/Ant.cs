@@ -12,9 +12,12 @@ namespace AntGraph
         Point rootLocation;
         Point currentLocation;
         List<Point> visitedPoints;
+        StatisticsManager statisticManager;
+        double currentPathLength = 0;
 
-        public Ant(Point currentLocation)
+        public Ant(Point currentLocation, StatisticsManager statisticManager)
         {
+            this.statisticManager = statisticManager;
             this.rootLocation = currentLocation;
             this.currentLocation = currentLocation;
             visitedPoints = new List<Point>();
@@ -41,6 +44,9 @@ namespace AntGraph
             {
                 edgesToVisit = edges;
                 visitedPoints.Clear();
+                currentPathLength += Graph.verticesDistance(currentLocation, rootLocation);
+                statisticManager.addScore(currentPathLength);
+                currentPathLength = 0;
                 return rootLocation;
             }
 
@@ -59,6 +65,7 @@ namespace AntGraph
                 pheromoneAmount += 2*edge.Value + 1;
                 if (pheromoneAmount > rand)
                 {
+                    currentPathLength += Graph.verticesDistance(currentLocation, edge.Key.p2);
                     return edge.Key.p2;
                 }
             }
