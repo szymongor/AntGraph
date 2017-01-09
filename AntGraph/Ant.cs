@@ -43,9 +43,11 @@ namespace AntGraph
             if (edgesToVisit.Count == 0)
             {
                 edgesToVisit = edges;
-                visitedPoints.Clear();
+                visitedPoints.Add(rootLocation);
                 currentPathLength += Graph.verticesDistance(currentLocation, rootLocation);
-                statisticManager.addScore(currentPathLength);
+                statisticManager.addScore(currentPathLength, visitedPoints.ToArray());
+                visitedPoints.Clear();
+                visitedPoints.Add(rootLocation);
                 currentPathLength = 0;
                 return rootLocation;
             }

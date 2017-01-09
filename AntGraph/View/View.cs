@@ -42,6 +42,8 @@ namespace AntGraph.View
                     drawEdges(g);
                     drawGraph(g);
                     drawAverageScore(g);
+                    drawMinScore(g);
+                    drawSolution(g);
                 }
             }
         }
@@ -82,8 +84,17 @@ namespace AntGraph.View
         {
             Brush brush = new SolidBrush(Color.Lime);
             String s = "Average score: "+((int)statisticManager.averagePathLength()).ToString();
-            Font drawFont = new Font("Arial", 8);
+            Font drawFont = new Font("Arial", 12);
             PointF drawPoint = new PointF(30, 30);
+            g.DrawString(s, drawFont, brush, drawPoint);
+        }
+
+        private void drawMinScore(Graphics g)
+        {
+            Brush brush = new SolidBrush(Color.Lime);
+            String s = "Minimum score: " + ((int)statisticManager.getMinScore()).ToString();
+            Font drawFont = new Font("Arial", 12);
+            PointF drawPoint = new PointF(30, 60);
             g.DrawString(s, drawFont, brush, drawPoint);
         }
 
@@ -108,32 +119,48 @@ namespace AntGraph.View
 
         private void drawSolution(Graphics g)
         {
-            List<Point> vertices = graph.getVertices();
-            int graphSize = graph.getVertices().Count;
-            Point currentPoint = vertices[0];
-            int i = 0;
-            while (i < graphSize)
+            try
             {
-                i++;
-                Dictionary<Edge, double> edges = graph.getEdgesFromVertex(currentPoint);
-                double maxPheromone = 0;
-                Point maxDestPoint = currentPoint;
-                foreach (KeyValuePair<Edge, double> edge in edges)
-                {
-                    if (edge.Value > maxPheromone && vertices.Contains(edge.Key.p2))
-                    {
-                        maxPheromone = edge.Value;
-                        maxDestPoint = edge.Key.p2;
-                    }
-                }
-                Pen pen = new Pen(Color.Red, (float)Math.Log10(maxPheromone)*2);
-                g.DrawLine(pen, currentPoint, maxDestPoint);
-                vertices.Remove(currentPoint);
-                currentPoint = maxDestPoint;
-
+                Point[] drawSolution = statisticManager.getMinPath();
+                Pen pen = new Pen(Color.Red, 5);
+                g.DrawLines(pen, drawSolution);
             }
+            catch (Exception e)
+            {
+                return;
+            }
+            
 
         }
+
+        //private void drawSolution(Graphics g)
+        //{
+        //    List<Point> vertices = graph.getVertices();
+        //    int graphSize = graph.getVertices().Count;
+        //    Point currentPoint = vertices[0];
+        //    int i = 0;
+        //    while (i < graphSize)
+        //    {
+        //        i++;
+        //        Dictionary<Edge, double> edges = graph.getEdgesFromVertex(currentPoint);
+        //        double maxPheromone = 0;
+        //        Point maxDestPoint = currentPoint;
+        //        foreach (KeyValuePair<Edge, double> edge in edges)
+        //        {
+        //            if (edge.Value > maxPheromone && vertices.Contains(edge.Key.p2))
+        //            {
+        //                maxPheromone = edge.Value;
+        //                maxDestPoint = edge.Key.p2;
+        //            }
+        //        }
+        //        Pen pen = new Pen(Color.Red, (float)Math.Log10(maxPheromone)*2);
+        //        g.DrawLine(pen, currentPoint, maxDestPoint);
+        //        vertices.Remove(currentPoint);
+        //        currentPoint = maxDestPoint;
+
+        //    }
+
+        //}
 
         public void startAntSimulation(int antNumber)
         {
@@ -147,7 +174,11 @@ namespace AntGraph.View
             readyToDraw = false;
             using (Graphics g = Graphics.FromImage(bitmap))
             {
+                drawBacground(g);
                 drawSolution(g);
+                drawGraph(g);
+                drawAverageScore(g);
+                drawMinScore(g);
             }
         }
 
